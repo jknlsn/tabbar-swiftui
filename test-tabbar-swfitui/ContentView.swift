@@ -9,33 +9,6 @@
 import SwiftUI
 import UIKit
 
-struct ContentView: View {
-    @State private var selection = 0
- 
-    var body: some View {
-        TabView(selection: $selection){
-            Text("First View")
-                .font(.title)
-                .tabItem {
-                    VStack {
-                        Image("first")
-                        Text("First")
-                    }
-                }
-                .tag(0)
-            Text("Second View")
-                .font(.title)
-                .tabItem {
-                    VStack {
-                        Image("second")
-                        Text("Second")
-                    }
-                }
-                .tag(1)
-        }
-    }
-}
-
 struct UIKitTabView: View {
     private var viewControllers: [UIHostingController<AnyView>]
     @State var selectedIndex: Int = 0
@@ -65,7 +38,10 @@ struct UIKitTabView: View {
         // convenience
         init<V: View>(view: V, title: String?, image: String, selectedImage: String? = nil) {
             let selectedImage = selectedImage != nil ? UIImage(named: selectedImage!) : nil
-            let barItem = UITabBarItem(title: title, image: UIImage(named: image), selectedImage: selectedImage)
+            // NOTE: Uncomment below to use named UIImage
+            // let barItem = UITabBarItem(title: title, image: UIImage(named: image), selectedImage: selectedImage)
+            // NOTE: This line uses systemName to use SF Symbols image
+            let barItem = UITabBarItem(title: title, image: UIImage(systemName: image), selectedImage: selectedImage)
             self.init(view: view, barItem: barItem)
         }
     }
@@ -104,13 +80,13 @@ struct TabBarController: UIViewControllerRepresentable {
     }
 }
 
-struct ExampleView: View {
+struct ContentView: View {
     @State var text: String = ""
     
     var body: some View {
         UIKitTabView([
-            UIKitTabView.Tab(view: NavView(), title: "First", image: ""),
-            UIKitTabView.Tab(view: Text("Second View"), title: "Second", image: "")
+            UIKitTabView.Tab(view: NavView(), title: "First", image: "paperplane"),
+            UIKitTabView.Tab(view: Text("Second View"), title: "Second", image: "person.2")
         ])
     }
 }
